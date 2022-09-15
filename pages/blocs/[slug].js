@@ -1,8 +1,6 @@
 import React from 'react'
 
 export default function bloc({bloc}) {
-console.log("🚀 ~ file: [slug].js ~ line 4 ~ bloc ~ bloc", bloc)
-
     if(!bloc){
         return <>
               <section className="bg-white w-full h-full dark:bg-gray-900">
@@ -38,7 +36,7 @@ console.log("🚀 ~ file: [slug].js ~ line 4 ~ bloc ~ bloc", bloc)
 export async function getStaticPaths() {  
     return {
       paths:[{params: { slug: '1' }},{params: { slug: '2' }}],
-      fallback: true,
+      fallback: false,
     };
   }
   
@@ -50,10 +48,12 @@ export async function getStaticProps (context) {
         blocs = await blocs.json();
     }
     let bloc = []
-    bloc = blocs.find((el) => el.id === +slug);
-    if (bloc.length > 0) {
-        return {notFound: true}
-    }
+    bloc = blocs.find((el) => {
+        return el.id === +slug
+    })
+    // if (bloc=== undefined) {
+    //     return {notFound: true}
+    // }
   return {
     props: { bloc },
   };

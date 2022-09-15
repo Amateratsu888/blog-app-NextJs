@@ -42,7 +42,7 @@ export default function bloc({user}) {
 export async function getStaticPaths() {  
     return {
       paths:[{params: { slug: '1' }},{params: { slug: '2' }}],
-      fallback: true,
+      fallback: false,
     };
   }
   
@@ -55,9 +55,9 @@ export async function getStaticProps (context) {
     }
     let user = []
     user = users.find((el) => el.id === +slug);
-    if (user.length > 0) {
-        return {notFound: true}
-    }
+    // if (user.length === undefined) {
+    //     return {notFound: true}
+    // }
   return {
     props: { user },
   };
