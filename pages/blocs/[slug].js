@@ -36,7 +36,7 @@ export default function bloc({bloc}) {
 export async function getStaticPaths() {  
     return {
       paths:[{params: { slug: '1' }},{params: { slug: '2' }}],
-      fallback: false,
+      fallback: true,
     };
   }
   
@@ -44,16 +44,13 @@ export async function getStaticPaths() {
 export async function getStaticProps (context) {
     const slug = context.params.slug; 
     let blocs = await fetch("https://jsonplaceholder.typicode.com/posts");
-    if (blocs.ok) { 
         blocs = await blocs.json();
-    }
-    let bloc = []
-    bloc = blocs.find((el) => {
+    let bloc = blocs.find((el) => {
         return el.id === +slug
     })
-    // if (bloc=== undefined) {
-    //     return {notFound: true}
-    // }
+    if (bloc=== undefined) {
+        return {notFound: true}
+    }
   return {
     props: { bloc },
   };
